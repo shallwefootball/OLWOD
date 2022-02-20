@@ -1,7 +1,9 @@
-name: call-at-15-minutes
+name: Running Crawl!!
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    # 한국시간 일요일 ~ 목요일 / 22:50, 23: 50 두번 요청
+    - cron: "50 13 * * 0-4"
+    - cron: "50 14 * * 0-4"
 jobs:
   cron:
     runs-on: ubuntu-latest

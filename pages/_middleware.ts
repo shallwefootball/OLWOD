@@ -2,15 +2,13 @@ import type { NextRequest } from "next/server";
 
 const HASH_TAG = /#[\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]*/g;
 
-const { COOKIE, TARGET_ACCOUNT, CHANNEL_URL } = process.env;
-
 export async function middleware(req: NextRequest) {
-  const instaHeaders = new Headers({ Cookie: COOKIE });
+  const instaHeaders = new Headers({ Cookie: process.env.COOKIE });
 
   let text;
   try {
     const resEj = await fetch(
-      `https://www.instagram.com/${TARGET_ACCOUNT}/?__a=1`,
+      `https://www.instagram.com/${process.env.TARGET_ACCOUNT}/?__a=1`,
       {
         headers: instaHeaders,
       }
@@ -25,7 +23,7 @@ export async function middleware(req: NextRequest) {
   const body = JSON.stringify({ text });
 
   const channelHeaders = new Headers({ contentType: "application/json" });
-  await fetch(CHANNEL_URL, {
+  await fetch(process.env.CHANNEL_URL, {
     method: "POST",
     headers: channelHeaders,
     body,
