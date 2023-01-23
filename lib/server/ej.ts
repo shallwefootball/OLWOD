@@ -1,10 +1,6 @@
-import type { NextRequest } from "next/server";
-
 const HASH_TAG = /#[\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]*/g;
-
-export async function middleware(req: NextRequest) {
+export const getEJLatestFeed = async () => {
   const instaHeaders = new Headers({ "X-Ig-App-Id": process.env.IG_APP_ID });
-
   let resEj;
   try {
     const res = await fetch(
@@ -25,20 +21,6 @@ export async function middleware(req: NextRequest) {
 
   const { edges } = resEj.data.user.edge_owner_to_timeline_media;
   const { edge_media_to_caption } = edges[0].node;
-  const text = edge_media_to_caption.edges[0].node.text.replace(HASH_TAG, "");
-  const body = JSON.stringify({ text });
-
-  const channelHeaders = new Headers({ contentType: "application/json" });
-  await fetch(process.env.CHANNEL_URL, {
-    method: "POST",
-    headers: channelHeaders,
-    body,
-  });
-
-  return new Response(JSON.stringify({ message: "success!" }), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}
+  const wod = edge_media_to_caption.edges[0].node.text.replace(HASH_TAG, "");
+  return wod;
+};

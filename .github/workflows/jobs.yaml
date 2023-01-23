@@ -8,7 +8,7 @@ jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: Call CRONWOD Edge Function on Vercel
+      - name: Call OLWOD Edge Function on Vercel
         run: |
           curl --request GET \
           --url '${{ secrets.ENDPOINT }}' \
