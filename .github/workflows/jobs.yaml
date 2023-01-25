@@ -1,4 +1,4 @@
-name: Running Crawl!!
+name: Report to Slack!!
 on:
   schedule:
     # 한국시간 일요일 ~ 목요일 / 22:50, 23: 50 두번 요청
