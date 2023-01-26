@@ -1,14 +1,17 @@
 const HASH_TAG = /#[\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]*/g;
 export const getEJLatestFeed = async () => {
   const instaHeaders = new Headers({ "X-Ig-App-Id": process.env.IG_APP_ID });
+
+  const req = new Request(
+    `https://www.instagram.com/api/v1/users/web_profile_info/?username=${process.env.TARGET_ACCOUNT}`,
+    {
+      headers: instaHeaders,
+    }
+  );
+
   let resEj;
   try {
-    const res = await fetch(
-      `https://www.instagram.com/api/v1/users/web_profile_info/?username=${process.env.TARGET_ACCOUNT}`,
-      {
-        headers: instaHeaders,
-      }
-    );
+    const res = await fetch(req);
     resEj = await res.json();
   } catch (error) {
     if (error instanceof SyntaxError) {
